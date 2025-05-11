@@ -1,5 +1,9 @@
 # UNIVERSIDAD NACIONAL DEL ALTIPLANO
 
+<p align="center">
+  <img src="descargar.jpg" alt="Mi foto" width="320"/>
+</p>
+
 ## Facultad De Ingeniería Estadistica E Informática
 
 **Alumno:** Eliseo Tarqui Ajahuana  
@@ -13,6 +17,7 @@
 3. [Estructuras De Control](#estructuras-de-control)
 4. [Funciones](#funciones)
 5. [Arrays](#arrays)
+6. [Funcion](#funcion) 
 
 
 ## Introducción
@@ -139,11 +144,55 @@ int main() {
 }
 ```
 
-|     Tipo                           | Descripción                          |  Ejemplo                        |
-|------------------------------------|--------------------------------------|---------------------------------|
-| Con retorno y con parámetros       | Devuelve un resultado y recibe datos | int sumas (int a, int b)        |
-|--------------------------|            
 
-## Array
-El array, dentro de la programación, se refiere
+## Arrays
+En programación, un array (también llamado arreglo) es una estructura de datos que permite almacenar múltiples valores del mismo tipo en una sola variable, organizados de forma secuencial en la memoria del computador.
+
+### 🧪 Ejemplo básico de un array en C++
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    // Declaramos un array de 5 enteros
+    int numeros[5] = {10, 20, 30, 40, 50};
+
+    // Mostramos los elementos del array
+    for (int i = 0; i < 5; i++) {
+        cout << "Elemento " << i << ": " << numeros[i] << endl;
+    }
+
+    return 0;
+}
+```
+## Funcion
+##  ¿Qué es una función en C++?
+
+Una **función** en C++ es un bloque de código reutilizable que realiza una tarea específica. Permite **organizar el programa en partes más pequeñas**, facilitando su lectura, mantenimiento y reutilización.
+
+### 📌 Ventajas de usar funciones:
+- Evita repetir código.
+- Mejora la estructura del programa.
+- Permite dividir un problema grande en subproblemas más simples.
+
+---
+
+### 🧪 Ejemplo básico de una función en C++
+
+```cpp
+#include <iostream>
+using namespace std;
+
+// Definimos una función que suma dos números
+int sumar(int a, int b) {
+    return a + b;
+}
+
+int main() {
+    int resultado = sumar(5, 3);
+    cout << "La suma es: " << resultado << endl;
+    return 0;
+}
+```
 
