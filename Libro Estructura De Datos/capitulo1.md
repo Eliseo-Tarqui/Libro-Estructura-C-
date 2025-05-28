@@ -1,7 +1,7 @@
 # UNIVERSIDAD NACIONAL DEL ALTIPLANO
 
 <p align="center">
-  <img src="descargar.jpg" alt="Mi foto" width="320"/>
+  <img src="descargar.jpg" alt="Mi foto" width="320 "/>
 </p>
 
 ## Facultad De Ingeniería Estadistica E Informática
@@ -17,7 +17,8 @@
 3. [Estructuras De Control](#estructuras-de-control)
 4. [Funciones](#funciones)
 5. [Arrays](#arrays)
-6. [Funcion](#funcion) 
+6. [Funcion](#funcion)
+7. [Operadores & y *](#operadores-and-asterisco)
 
 
 ## Introducción
@@ -195,4 +196,137 @@ int main() {
     return 0;
 }
 ```
+
+## Operadores and asterisco
+En C++, los operadores & (ampersand) y * (asterisco) tienen un uso especial en el manejo de punteros, aunque también se pueden usar en otros contextos. A continuación se explica cada uno:
+
+### Operador & (operador de dirección)
+El operador & se utiliza para obtener la dirección de memoria de una variable. Es decir, nos da un puntero el valor.
+
+```cpp
+
+int numero = 10;
+int* puntero = &numero; // El puntero almacena la dirección de 'numero'
+```
+&numero devuelve la dirección de memoria de la variable numero, esa dirección se guarda en un puntero, que en este caso es int* puntero.
+
+### Operador * (operador de desreferenciación)
+
+El operador * se utiliza para acceder al almacenado en una dirección de memoria es decir al contenido del puntero.
+
+## Ejemplo
+```cpp
+int a = 10;
+int* p = &a;
+cout << *p; // Imprime 10
+```
+*p se puede decir que "el valor almacenado en la dirección que guarda p", como p apunta a "a", *p accede al contenido de a.
+
+## Ejemplo completo
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    int a = 42;
+    int* ptr = &a;      // 'ptr' guarda la dirección de 'a'
+    
+    cout << "Valor de a: " << a << endl;
+    cout << "Dirección de a: " << &a << endl;
+    cout << "Contenido de ptr: " << ptr << endl;
+    cout << "Valor apuntado por ptr: " << *ptr << endl;
+
+    return 0;
+}
+```
+## Operador ->
+ El operador-> se usa para acceder a los miembros de una estructura o clase a trav´ es de un puntero.
+ Este operador es una forma abreviada de hacer lo que ser´ ıa equivalente a (*ptr).miembro.
+ ### Ejemplo 
+ ```cpp
+ puntero->miembro
+ ```
+ Es lo mismo que:
+ ```cpp
+ (*puntero).miembro
+ ```
+ Es decir, ptr-> es lo mismo que (*ptr).x, pero más limpio y claro.
+
+ ### Ejemplo práctico
+ ```cpp
+ #include <iostream>
+using namespace std;
+
+struct Persona {
+    string nombre;
+    void saludar() {
+        cout << "Hola, soy " << nombre << endl;
+    }
+};
+
+int main() {
+    Persona p = {"Ana"};
+    Persona* ptr = &p;      // ptr apunta al objeto p
+
+    ptr->saludar();         // Accedemos a la función mediante puntero
+    cout << ptr->nombre;    // Accedemos al atributo mediante puntero
+
+    return 0;
+}
+```
+El operador -> es una herramienta esencial en C++ para trabajar con punteros a objetos. Su principal ventaja es que permite acceder de forma clara y directa a los miembros (atributos o métodos) de un objeto apuntado, sin necesidad de usar la notación más compleja (*ptr).miembro.
+
+Su uso es fundamental en estructuras de datos dinámicas, como listas enlazadas, árboles o cualquier situación en la que se manipulan objetos a través de punteros. Entender y dominar el operador -> es clave para escribir código más legible, eficiente y orientado a objetos en C++.
+
+¿Quieres que también redacte una conclusión comparando los operadores . y ->?
+
+## Listas enlazadas
+Una lista enlazada es una colección de elementos, llamados nodos, donde cada nodo contiene dos partes:
+
+1. Un dato (por ejemplo, un número o un objeto)
+
+2. Un puntero (o enlace) al siguiente nodo en la lista
+
+A diferencia de los arrays, las listas enlazadas no almacenan sus elementos en posiciones contiguas de memoria, lo que permite insertar o eliminar nodos fácilmente sin necesidad de mover otros elementos.
+Ejemplo
+```cpp
+[10 | * ] → [20 | * ] → [30 | NULL]
+```
+Cada no tiene, un valor (por ejemplo 10,20 y 30), un puntero al siguiente nodo.
+
+## Tipos de listas enlazadas
+
+- Lista simplemente enlazada: Cada nodo apunta solo al siguiente nodo.
+- Lista doblemente enlazasa: Cada nodo apunta al anterior y al siguiente nodo.
+- Lista Circular: El último nodo apunta al primero, formando un ciclo.
+
+Las ventajas son las inserciones y eliminaciones eficientes en cualquier posición, también el tamaño dinámico (crece o se reduce en tiempo de ejecución), finalmente ideal para estructuras como pilas, colas y árboles.
+
+### Ejemplo
+```cpp
+#include <iostream>
+using namespace std;
+
+struct Nodo {
+    int dato;
+    Nodo* siguiente;
+};
+
+int main() {
+    Nodo* primero = new Nodo{10, nullptr};
+    primero->siguiente = new Nodo{20, nullptr};
+    primero->siguiente->siguiente = new Nodo{30, nullptr};
+
+    Nodo* actual = primero;
+    while (actual != nullptr) {
+        cout << actual->dato << " ";
+        actual = actual->siguiente;
+    }
+    return 0;
+}
+```
+
+
+
+
 
