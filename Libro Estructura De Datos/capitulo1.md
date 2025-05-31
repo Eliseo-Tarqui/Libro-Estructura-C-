@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 # UNIVERSIDAD NACIONAL DEL ALTIPLANO
 
 <p align="center">
@@ -19,7 +24,10 @@
 5. [Arrays](#arrays)
 6. [Funcion](#funcion)
 7. [Operadores & y *](#operadores-and-asterisco)
-
+8. [Listas enlazadas](#listas-enlazadas)
+9. [Pilas](#pilas)
+10. [Colas](#colas)
+11. [Recursividad](#recursividad)
 
 ## Introducción
 Las estructuras de datos son un modo de representar información en una computadora, aunque además, cuentan con un comportamiento interno. ¿Qué significa? Que se rige por determinadas reglas/restricciones que han sido dadas por la forma en que está construida internamente.
@@ -325,8 +333,371 @@ int main() {
     return 0;
 }
 ```
+## Pilas
+En C++, una pila (stack en inglés) es una estructura de datos lineal que sigue el principio LIFO (Last In, First Out), es decir, el último elemento que entra es el primero en salir.
+
+### Las caractéristicas principales de una pila:
+Push() : Inserta un elemento en la parte superior de la pila.
+Pop() : Elimina el elemento que está en la parte superior.
+Top() : Devuelve el elemento en la cima de la pila (sin eliminarlo).
+Empty() : Verifica si la pila está vacía.
+Size() : Devuelve el número de elementos en la pila.
+
+### Ejemplo una pila de platos
+imagina que estás en una fiesta y hay una pila de platos para servir comida. Los platos están apilados uno encima de otro.
+
+- Cuando llega un plato limpio, lo pones encima de la pila --> esto es push.
+- Cuando alguien quiere servirse, toma el plato de arriba --> esto es un pop.
+- Si alguien quiere saber qué se va a usar primero, mira el de arriba sin sacarlo --> eso sería un top.
+### ¿Qué ocurre?
+El último plato que colocaste será el primero en usarse.
+--> Esto es exactamente el comportamiento LIFO(Last In, First Out).
+
+```cpp
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main() {
+    stack<string> pilaPlatos;
+    int opcion;
+    string plato;
+
+    do {
+        cout << "\n--- Pila de Platos ---\n";
+        cout << "1. Agregar un plato (push)\n";
+        cout << "2. Usar un plato (pop)\n";
+        cout << "3. Ver el plato de arriba (top)\n";
+        cout << "4. Ver cuántos platos hay (size)\n";
+        cout << "5. Ver si la pila está vacía (empty)\n";
+        cout << "6. Salir\n";
+        cout << "Seleccione una opción: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                cout << "Ingrese el nombre o tipo de plato: ";
+                cin >> plato;
+                pilaPlatos.push(plato);
+                cout << "Plato agregado.\n";
+                break;
+
+            case 2:
+                if (!pilaPlatos.empty()) {
+                    cout << "Usando el plato: " << pilaPlatos.top() << endl;
+                    pilaPlatos.pop();
+                } else {
+                    cout << "No hay platos en la pila.\n";
+                }
+                break;
+
+            case 3:
+                if (!pilaPlatos.empty()) {
+                    cout << "Plato en la cima: " << pilaPlatos.top() << endl;
+                } else {
+                    cout << "La pila está vacía.\n";
+                }
+                break;
+
+            case 4:
+                cout << "Cantidad de platos en la pila: " << pilaPlatos.size() << endl;
+                break;
+
+            case 5:
+                if (pilaPlatos.empty()) {
+                    cout << "La pila está vacía.\n";
+                } else {
+                    cout << "La pila NO está vacía.\n";
+                }
+                break;
+
+            case 6:
+                cout << "Saliendo del programa...\n";
+                break;
+
+            default:
+                cout << "Opción no válida. Intente de nuevo.\n";
+                break;
+        }
+    } while (opcion != 6);
+
+    return 0;
+}
+```
+¿Que puedes hacer con este programa?
+- Agregar el plato de arriba.
+- Ver qué plato está en la cima.
+- Revisar el número total de platos.
+- Comprobar si ya no hay platos.
 
 
+### Ejemplo usando la librería stack.
+```cpp
+#include <iostream>
+#include <stack>
+using namespace std;
 
+int main() {
+    stack<int> pila;
 
+    // Insertar elementos
+    pila.push(10);
+    pila.push(20);
+    pila.push(30);
 
+    cout << "Elemento en la cima: " << pila.top() << endl;  // 30
+
+    // Eliminar el elemento en la cima
+    pila.pop();
+
+    cout << "Nueva cima: " << pila.top() << endl;  // 20
+
+    // Mostrar el tamaño de la pila
+    cout << "Tamaño de la pila: " << pila.size() << endl;
+
+    return 0;
+}
+```
+
+### Ejemplo (Practica 1)
+```cpp
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main() {
+    string cadena;
+    stack<char> pila;
+
+    cout << "Ingresa una cadena: ";
+    cin >> cadena;
+
+    // Apilar cada carácter
+    for (char c : cadena) {
+        pila.push(c);
+    }
+
+    // Imprimir en orden inverso
+    cout << "Cadena invertida: ";
+    while (!pila.empty()) {
+        cout << pila.top();
+        pila.pop();
+    }
+
+    cout << endl;
+    return 0;
+}
+```
+Al desapilarse: se imprime uno por uno.
+- a-->l-->o-->h
+Resultado: aloh
+nota: Apilar letras y luego desapilarlas invierte el orden.
+
+### Ejemlo (Práctica 2)
+```cpp
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main() {
+    int numero;
+    stack<int> binario;
+
+    cout << "Ingresa un número decimal: ";
+    cin >> numero;
+
+    if (numero == 0) {
+        cout << "0\n";
+        return 0;
+    }
+
+    // Convertir a binario
+    while (numero > 0) {
+        binario.push(numero % 2);
+        numero /= 2;
+    }
+
+    cout << "El número en binario es: ";
+    while (!binario.empty()) {
+        cout << binario.top();
+        binario.pop();
+    }
+
+    cout << endl;
+    return 0;
+}
+```
+Al desapilar se imprime: 1101
+Nota: El binario se forma desde el último residuo hacia el primero, por eso usamos una pila.
+
+## Cola
+Una cola (queue en inglés) es una estructura de datos lineal que sigue el principio FIFO:
+   First In, First Out --> El primero en entrar es el primero en salir.
+
+### Ejemplo de la vida real:
+- La primera persona que llega es la primera en se atentida.
+- Las nuevas personas se agregan al final de la fila.
+- Nadie puede pasar delante de los que llegaron antes.
+
+Para trabajar con colas en C++ usamos la librería
+```cpp
+#include <queue>
+```
+Las operaciones pricipales:
+push() ---> Inserta un elemento al final.
+pop()  ---> Elimina el elemento del frente.
+front() ---> Muestra el primer elemento.
+back() ---> Muestra el último elemento.
+empty() ---> Verifica si la cola está vacía.
+size() ---> Muestra cuántos elementos hay.
+
+### Ejemplo en 
+```cpp
+#include <iostream>
+#include <queue>
+using namespace std;
+
+int main() {
+    queue<string> cola;
+
+    cola.push("Persona 1");
+    cola.push("Persona 2");
+    cola.push("Persona 3");
+
+    cout << "Primera en la cola: " << cola.front() << endl;
+    cout << "Última en la cola: " << cola.back() << endl;
+
+    cola.pop(); // Persona 1 sale
+
+    cout << "Ahora la primera es: " << cola.front() << endl;
+    cout << "Tamaño actual de la cola: " << cola.size() << endl;
+
+    return 0;
+}
+```
+Este programa muestra cómo funciona una cola en C++. Se agregan tres personas a la cola usando push(), luego se muestra quién está al frente (front()) y quién al final (back()). Al usar pop(), la primera persona sale de la cola. Finalmente, se muestra la nueva persona al frente y el tamaño actual de la cola. La cola funciona con el principio FIFO: el primero en entrar es el primero en salir.
+
+## Ejemplo (Practica 1): Simular atención en ventanilla.
+```cpp
+#include <iostream>
+#include <queue>
+using namespace std;
+
+int main() {
+    queue<string> clientes;
+
+    clientes.push("Ana");
+    clientes.push("Luis");
+    clientes.push("Carlos");
+
+    while (!clientes.empty()) {
+        cout << "Atendiendo a: " << clientes.front() << endl;
+        clientes.pop();
+    }
+
+    return 0;
+}
+```
+Este programa simula una cola de atención en una ventanilla. Se agregan tres clientes a la cola y se atienden en orden utilizando front y pop. Se sigue el principio FIFO: el primero en llegar es el primero en ser atendido.
+
+### Ejemplo (Practica 2): Cola de números con operaciones.
+```cpp
+#include <iostream>
+#include <queue>
+using namespace std;
+
+int main() {
+    queue<int> numeros;
+
+    // Agregamos números a la cola
+    for (int i = 1; i <= 5; i++) {
+        numeros.push(i);
+    }
+
+    int suma = 0;
+    while (!numeros.empty()) {
+        suma += numeros.front();
+        numeros.pop();
+    }
+
+    cout << "La suma total de los números es: " << suma << endl;
+    return 0;
+}
+```
+Este programa utiliza una cola para almacenar números del 1 al 5. Luego, los extrae uno por uno para sumarlos. Se muestra cómo usar una cola para procesar datos en orden de llegada.
+
+## Recursividad
+La recursividad es una técnica en la que una función se llama a sí misma para resolver un problema.
+
+Es como dividir un problema grandee en subproblemas más pequeños del mismo tipo, hasta llegar a un caso base que sí puede resolverse directamente.
+
+## Ejemplo en la vida real
+Imagina un conjunto de muñecas rusas (matrioshkas):
+Cada una contiene otra más pequeña dentro, hasta llegar a la más pequeñita que no abre más.
+Ese último caso es el caso base.
+Desempacar cada muñeca es como un proceso recursivo: cada paso es igual, solo más pequeño.
+
+Las partes más importantes de la recursividad.
+
+1. Caso base: la condición para detener la recursión.
+2. Llamada recursiva: la función se llama a sí misma con un valor más simple.
+
+### Ejemplo: Factorial
+```cpp
+#include <iostream>
+using namespace std;
+
+int factorial(int n) {
+    if (n == 0)  // caso base
+        return 1;
+    else         // llamada recursiva
+        return n * factorial(n - 1);
+}
+
+int main() {
+    int numero = 5;
+    cout << "El factorial de " << numero << " es: " << factorial(numero) << endl;
+    return 0;
+}
+```
+
+La función factorial() se llama a sí misma con n - 1 hasta llegar a 0. El caso base es cuando n == 0, que devuelve 1. Así, se calcula el factorial de forma recursiva.
+
+### Ejemplo (Práctica 1): Sum de números naturales (recursivo)
+```cpp
+#include <iostream>
+using namespace std;
+
+int suma(int n) {
+    if (n == 0)  // caso base
+        return 0;
+    else         // llamada recursiva
+        return n + suma(n - 1);
+}
+
+int main() {
+    int numero = 5;
+    cout << "La suma de 1 hasta " << numero << " es: " << suma(numero) << endl;
+    return 0;
+}
+```
+Este programa calcula la suma de los números del 1 al n usando recursividad. La función suma(n) se llama a sí misma restando 1 hasta llegar a 0, que es el caso base.
+
+### Ejemplo (Práctica 2): Secuencia de Fibonacci.
+```cpp
+#include <iostream>
+using namespace std;
+
+int fibonacci(int n) {
+    if (n == 0) return 0;      // caso base 1
+    if (n == 1) return 1;      // caso base 2
+    return fibonacci(n - 1) + fibonacci(n - 2);  // llamada recursiva
+}
+
+int main() {
+    int n = 6;
+    cout << "El término " << n << " de Fibonacci es: " << fibonacci(n) << endl;
+    return 0;
+}
+```
+Este programa calcula n-ésimo número de la secuencia de Fibonacci usando recursividad. La función ses llama a sí misma sumando lo dos términos anteriores. Tiene dos casos base: fibonacci(o) = 0 y fibonacci(1) = 1.
